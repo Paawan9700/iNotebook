@@ -6,11 +6,13 @@ const { body, validationResult } = require("express-validator");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
+
+const fetchuser = require('../middleware/fetchuser');
 const saltRounds = 10;
 
 const JWT_SECRET = "Paawanisagoodb$oy";
 
-// Create a user using POST  : /api/auth/createuser, doesn't require auth ---> no login required (basiclly register )
+// Route 1 -> Create a user using POST  : /api/auth/createuser, doesn't require auth ---> no login required (basiclly register )
 
 router.post(
   "/createuser",
@@ -75,7 +77,7 @@ router.post(
 );
 
 
-// verifying a user through login (basically login route)
+// Route 2 ->  verifying a user through login (basically login route)
 router.post('/login',   [
   body("email", "enter a valid email").isEmail(),
   body("password", "password cannot be blank").exists()
@@ -119,5 +121,16 @@ router.post('/login',   [
 
 })
 
+// Route 3 -> fething user information -> login required
+router.post('/getuser', fetchuser, async (req, res) => {
+  try {
+    userId = req.user.id;
+    const user = await User.findById(userId).select("-password");
+    res.send(user);
+  } catch (error) {
+    console.error(error.message);
+      res.status(500).send("internal server error");
+  }
+})
 
 module.exports = router;
