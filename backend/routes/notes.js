@@ -58,10 +58,33 @@ router.post(
 );
 
 // Router 3 -> updating the notes from the database of the user who is logged in -> PUT request -> api/notes/updatenote : login required
-// router.put("/updatenote/:id", fetchuser, async (req, res) => {
-//     const {title, description, tag} = req.body;
+router.put("/updatenote/:id", fetchuser, async (req, res) => {
+    const {title, description, tag} = req.body;
 
+    // creating a new note object
+    const newNote = {};
+    if(title) {
+        newNote.title = title;
+    }
+    if(description) {
+        newNote.description = description;
+    }
+    if(tag) {
+        newNote.tag = tag;
+    }
 
-// });
+    let note = await Notes.findById(req.params.id);
+    if(!note){
+        return res.status(404).send("Not Found!!");
+    }
+
+    if(note.user.toString() !== req.user.id){
+        return res.status(401).send("Not Allowed!!");
+    }
+
+    // find the note to be updated and update it
+     note = await Notes.findByIdAndUpdate(req.params.id, {$set : newNote}, {new : true});
+     res.json(note);
+});
 
 module.exports = router;
