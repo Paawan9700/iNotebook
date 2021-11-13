@@ -10,6 +10,8 @@ const Noteitem = (props) => {
           <p className="card-text">
             {description}
           </p>
+          <i className="fas fa-trash-alt mx-3"></i>
+          <i className="far fa-edit mx-3"></i>
         </div>
       </div>
     </div>

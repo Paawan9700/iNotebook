@@ -6,6 +6,7 @@ import { Navbar } from "./components/Navbar";
 import { Home } from "./components/Home";
 import { About } from "./components/About";
 import NoteState from "./context/notes/NotesState";
+import {Alert} from "./components/Alert";
 
 function App() {
   return (
@@ -13,10 +14,11 @@ function App() {
       <NoteState>
         <Router>
           <Navbar />
+          <Alert message = "this is an amazing react course"/>
           <div className = "conatiner">
           <Switch>
             <Route exact path="/">
-              <Home />
+              <Home /> 
             </Route>
             <Route exact path="/about">
               <About />
@@ -30,3 +32,5 @@ function App() {
 }
 
 export default App;
+
+

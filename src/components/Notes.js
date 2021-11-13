@@ -11,7 +11,7 @@ export const Notes = () => {
     <div className="row my-4">
       <h1> Your Notes</h1>
       {initialnotes.map((note) => {
-        return <Noteitem note = {note}/>;
+        return <Noteitem key = {note._id} note = {note}/>;
       })}
     </div>
   );
