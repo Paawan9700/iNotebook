@@ -17,7 +17,7 @@ function App() {
           <Alert message = "this is an amazing react course"/>
           <div className = "conatiner">
           <Switch>
-            <Route exact path="/">
+            <Route exact path="/">   
               <Home /> 
             </Route>
             <Route exact path="/about">
